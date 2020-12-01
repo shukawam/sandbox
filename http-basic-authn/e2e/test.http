@@ -1,0 +1,18 @@
+@endPoint = https://fgw5zmlsdxpqyppd4mwure4zdy.apigateway.ap-tokyo-1.oci.customer-oci.com/basic
+
+# test001@example.com:password123
+@validUserToken = dGVzdDAwMUBleGFtcGxlLmNvbTpwYXNzd29yZDEyMw==
+
+# dummy@example.com:dummydummy
+@invalidUserToken = ZHVtbXlAZXhhbXBsZS5jb206ZHVtbXlkdW1teQ==
+
+### Authorization Headerなし -> 401 Unauthorized
+GET {{endPoint}}/hello HTTP/1.1
+
+### Authorization Headerあり_200
+GET {{endPoint}}/hello HTTP/1.1
+Authorization: Basic {{validUserToken}}
+
+### Authorization_Headerあり_401 -> 401 Unauthorized
+GET {{endPoint}}/hello HTTP/1.1
+Authorization: Basic {{invalidUserToken}}
