@@ -19,7 +19,7 @@ public class HelloFunction {
             return invalidResult;
         }
         var expectedToken = Base64.getEncoder().encodeToString(OK_USER.getBytes(StandardCharsets.UTF_8));
-        if (!expectedToken.equals(input.getToken())) {
+        if (!expectedToken.equals(input.getToken().replaceAll("Basic\\s", ""))) {
             System.out.println("Basic Authentication is failed!");
             return invalidResult;
         }
