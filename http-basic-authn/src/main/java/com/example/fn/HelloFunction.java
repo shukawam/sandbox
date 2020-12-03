@@ -33,7 +33,7 @@ public class HelloFunction {
         validResult.setActive(true);
         validResult.setExpiresAt("2019-05-30T10:15:30+01:00");
         validResult.setPrincipal("https://example.com/users/jdoe");
-        validResult.setScope(new String[]{"list:hello", "read:hello", "create:hello", "update:hello", "delete:hello", "someScope"});
+        validResult.setScope(new String[]{"list:hello", "read:hello"});
         validResult.setClientId("host123");
         validResult.setContext(Map.of("email", "john.doe@example.com"));
         return validResult;
