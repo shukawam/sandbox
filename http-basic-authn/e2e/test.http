@@ -6,13 +6,17 @@
 # dummy@example.com:dummydummy
 @invalidUserToken = ZHVtbXlAZXhhbXBsZS5jb206ZHVtbXlkdW1teQ==
 
-### Authorization Headerなし -> 401 Unauthorized
+### Authorization Headerなし
 GET {{endPoint}}/hello HTTP/1.1
 
-### Authorization Headerあり_200
+### Authorization Headerあり（正常なトークン）
 GET {{endPoint}}/hello HTTP/1.1
 Authorization: Basic {{validUserToken}}
 
-### Authorization_Headerあり_401 -> 401 Unauthorized
+### Authorization Headerあり（異常なトークン）
 GET {{endPoint}}/hello HTTP/1.1
 Authorization: Basic {{invalidUserToken}}
+
+### Authorization Headerあり（許可されていない操作）
+GET {{endPoint}}/hello2 HTTP/1.1
+Authorization: Basic {{validUserToken}}
