@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -120,5 +121,8 @@
       }
     }
   },
-  "defaultProject": "idcs-auth-sample-client"
+  "defaultProject": "idcs-auth-sample-client",
+  "cli": {
+    "analytics": "41567355-b686-4a2c-b7c3-94bfba281b7f"
+  }
 }
