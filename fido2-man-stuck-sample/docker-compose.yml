@@ -1,0 +1,65 @@
+version: '3.3'
+volumes:
+  database-data:
+  back-libs:
+  front-libs:
+
+services:
+  # ----------------------------------------
+  # Backend App
+  # ----------------------------------------
+  webauthn-server:
+    build: ./webauthn-nestjs-sample
+    container_name: webauthn-server
+    working_dir: /webauthn-server
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./webauthn-nestjs-sample:/webauthn-server
+      - back-libs:/webauthn-server/node_modules/
+    tty: true
+    environment:
+      TZ: 'Asia/Tokyo'
+      ORIGIN: 'http://localhost:4200'
+      RP_NAME: 'fido2-server-sample'
+    command: bash -c 'npm install && npm run start:dev'
+    depends_on:
+      - mongo
+  # ----------------------------------------
+  # Frontend App
+  # ----------------------------------------
+  webauthn-client:
+    build: ./webauthn-angular-sample
+    container_name: webauthn-client
+    working_dir: /webauthn-client
+    ports:
+      - '4200:4200'
+    volumes:
+      - ./webauthn-angular-sample:/webauthn-client
+      - front-libs:/webauthn-client/node_modules/
+    tty: true
+    environment:
+      TZ: 'Asia/Tokyo'
+    command: bash -c 'npm run start'
+    depends_on:
+      - webauthn-server
+  # ----------------------------------------
+  # Database: MongoDB
+  # ----------------------------------------
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    ports:
+      - '27017:27017'
+    volumes:
+      - database-data:/data/db
+  # ----------------------------------------
+  # GUI Tool: Mongo Express
+  # ----------------------------------------
+  mongo-express:
+    image: mongo-express
+    container_name: database-gui-tool
+    restart: always
+    ports:
+      - '8081:8081'

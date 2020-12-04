@@ -1,0 +1,79 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.1.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id 'com.diffplug.eclipse.apt' version '3.23.0'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	domaGenRuntime
+}
+
+repositories {
+	mavenCentral()
+	maven {url 'https://oss.sonatype.org/content/repositories/snapshots/'}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	// Doma2
+	implementation 'org.seasar.doma.boot:doma-spring-boot-starter:1.4.0'
+	annotationProcessor 'org.seasar.doma:doma-processor:2.35.0'
+	// DomaGen
+	domaGenRuntime 'org.seasar.doma:doma-gen:2.28.0'
+	domaGenRuntime 'org.postgresql:postgresql'
+
+}
+
+test {
+	useJUnitPlatform()
+}
+
+// DomaGen Tasks
+task gen {
+	group = 'doma-gen'
+	doLast {
+		ant.taskdef(resource: 'domagentask.properties',
+			classpath: configurations.domaGenRuntime.asPath)
+		ant.gen(url: 'jdbc:postgresql://172.30.229.186:15432/sardine', user: 'postgres', password: 'postgres',
+			templatePrimaryDir: 'src/main/resources/gen_templates') {
+			entityConfig(packageName: 'com.example.demo.gen.entity', useListener: true, namingType: 'snake_lower_case',
+				generationType: 'sequence', overwrite: true, useAccessor: false)
+			daoConfig(packageName: 'com.example.demo.gen.dao',  overwrite: true)
+			sqlConfig()
+			sqlTestCaseConfig(destDir: 'src/test/java/gen')
+    	}
+	}
+}
+
+task genTestCases {
+	group 'doma-gen'
+	doLast {
+		ant.taskdef(resource: 'domagentask.properties',
+			classpath: configurations.domaGenRuntime.asPath)
+		ant.gen(url: 'jdbc:postgresql://172.30.229.186:15432/sardine', user: 'postgres', password: 'postgres',
+			templatePrimaryDir: 'src/main/resources/gen_templates') {
+			sqlTestCaseConfig {
+				fileset(dir: 'src/main/resources') {
+					include(name: 'META-INF/**/*.sql')
+				}
+			}
+		}
+	}
+}

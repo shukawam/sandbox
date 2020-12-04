@@ -1,0 +1,5 @@
+{
+  "/webauthn": {
+    "target": "http://webauthn-server:3000"
+  }
+}
