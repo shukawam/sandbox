@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  idcs_base_url: 'https://idcs-f0017ddeef0241cfbd70e057c032ff44.identity.oraclecloud.com',
+  client_id: 'ae777aecc5bb4d83a511990c465238b3',
+  redirect_url: 'http://localhost:4200/item-search'
 };
 
 /*
