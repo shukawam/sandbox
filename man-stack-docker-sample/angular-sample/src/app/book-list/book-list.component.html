@@ -1,0 +1,19 @@
+<h1>Book List</h1>
+<hr />
+<div>
+  <button (click)="search()">search</button>
+</div>
+<table>
+  <thead>
+    <th>本の名前</th>
+    <th>著者</th>
+    <th>備考</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let book of bookList">
+      <td>{{book.name}}</td>
+      <td>{{book.author}}</td>
+      <td>{{book.remarks}}</td>
+    </tr>
+  </tbody>
+</table>

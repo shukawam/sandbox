@@ -1,0 +1,63 @@
+version: '3.3'
+volumes:
+  database-data:
+  back-libs:
+  front-libs:
+
+services:
+  # ----------------------------------------
+  # Backend App
+  # ----------------------------------------
+  api-server:
+    build: ./nest-sample
+    container_name: api-server
+    working_dir: /nest-sample
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./nest-sample:/nest-sample
+      - back-libs:/nest-sample/node_modules/
+    tty: true
+    environment:
+      TZ: 'Asia/Tokyo'
+    command: bash -c 'npm install && npm run start:dev'
+    depends_on:
+      - mongo
+  # ----------------------------------------
+  # Database: MongoDB
+  # ----------------------------------------
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    ports:
+      - '27017:27017'
+    volumes:
+      - database-data:/data/db
+  # ----------------------------------------
+  # GUI Tool: Mongo Express
+  # ----------------------------------------
+  mongo-express:
+    image: mongo-express
+    container_name: database-gui-tool
+    restart: always
+    ports:
+      - '8081:8081'
+  # ----------------------------------------
+  # Frontend App
+  # ----------------------------------------
+  front-app:
+    build: ./angular-sample
+    container_name: front-app
+    working_dir: /angular-sample
+    ports:
+      - '4200:4200'
+    volumes:
+      - ./angular-sample:/angular-sample
+      - front-libs:/angular-sample/node_modules/
+    tty: true
+    environment:
+      TZ: 'Asia/Tokyo'
+    command: bash -c 'npm run start'
+    depends_on:
+      - api-server
