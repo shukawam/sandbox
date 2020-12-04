@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+spec:
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      containers:
+      - name: demo-app
+        image: nrt.ocir.io/orasejapan/k8s-demo-repo/demo-application-springboot:1.0.0
+        ports:
+        - name: api
+          containerPort: 8080
+        imagePullPolicy: Always
