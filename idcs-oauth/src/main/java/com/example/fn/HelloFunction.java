@@ -6,8 +6,12 @@ public class HelloFunction {
 
     private static final String TYPE = "TOKEN";
 
+    private static final String CREDENTIALS = "YWU3NzdhZWNjNWJiNGQ4M2E1MTE5OTBjNDY1MjM4YjM6NWY3N2FiOTEtMjRlOS00YTU1LTkzZTItOGEyZTQ5OGY5MGMx";
+
     public Result handleRequest(Input input) {
+        System.out.println("Entering the Authorizer Functions!");
         var invalidResult = invalidResult();
+        invalidResult.setWwwAuthenticate(input.getToken());
         if (!checkInput(input)) {
             return invalidResult;
         }
