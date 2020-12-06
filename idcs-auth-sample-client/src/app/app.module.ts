@@ -9,13 +9,15 @@ import { ItemSearchComponent } from './items/item-search/item-search.component';
 import { ItemCreateComponent } from './items/item-create/item-create.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { HeaderComponent } from './shared/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ItemSearchComponent,
-    ItemCreateComponent
+    ItemCreateComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
