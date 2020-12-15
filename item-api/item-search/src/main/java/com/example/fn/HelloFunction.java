@@ -2,6 +2,8 @@ package com.example.fn;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -19,18 +21,20 @@ public class HelloFunction {
 
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
-    public CompletableFuture<Map<String, String>> handleRequest() {
+    public List<Item> handleRequest() {
         final var ordsBaseUrl = System.getenv(ORDS_BASE_URL);
         var httpRequest = HttpRequest.newBuilder(URI.create(ordsBaseUrl + "/api/v1/items"))
                 .header("Authorization", getAuthToken())
                 .GET()
                 .build();
         UncheckedObjectMapper objectMapper = new UncheckedObjectMapper();
-        return httpClient
-                .sendAsync(httpRequest, HttpResponse.BodyHandlers.ofString())
-                .thenApply(HttpResponse::body)
-                .thenApply(objectMapper::readValue);
-
+        try {
+            var httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            return new Gson().fromJson(httpResponse.body(), new TypeToken<List<Item>>(){}.getType());
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 
     private String getAuthToken() {
