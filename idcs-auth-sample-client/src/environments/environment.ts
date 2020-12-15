@@ -9,8 +9,7 @@ export const environment = {
   client_secret: '5f77ab91-24e9-4a55-93e2-8a2e498f90c1',
   base64url_encoded_credential: 'YWU3NzdhZWNjNWJiNGQ4M2E1MTE5OTBjNDY1MjM4YjM6NWY3N2FiOTEtMjRlOS00YTU1LTkzZTItOGEyZTQ5OGY5MGMx',
   redirect_url: 'http://localhost:4200/item-search',
-  item_search_endpoint: '/api/v1/items',
-  item_create_endpoint: '/api/v1/items'
+  item_base: 'https://fgw5zmlsdxpqyppd4mwure4zdy.apigateway.ap-tokyo-1.oci.customer-oci.com/api/v1/items'
 };
 
 /*

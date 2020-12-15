@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GetAccessTokenResponseBody } from 'src/app/interface/get-access-token-response-body';
+import { Item } from 'src/app/interface/item';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -26,6 +27,15 @@ export class ItemSearchService {
       `${environment.idcs_base_url}/oauth2/v1/token`, payload,
       {
         headers: headers,
+        responseType: 'json'
+      }
+    ).toPromise();
+  }
+
+  async getAllItems(): Promise<Item[]> {
+    return await this.httpClient.get<Item[]>(
+      `${environment.item_base}`,
+      {
         responseType: 'json'
       }
     ).toPromise();
