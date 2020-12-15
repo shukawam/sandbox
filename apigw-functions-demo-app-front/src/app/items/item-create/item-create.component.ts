@@ -12,4 +12,8 @@ export class ItemCreateComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  async itemCreate(): Promise<void> {
+
+  }
+
 }
