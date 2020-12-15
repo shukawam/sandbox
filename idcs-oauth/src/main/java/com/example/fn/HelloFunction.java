@@ -28,8 +28,7 @@ public class HelloFunction {
         }
         System.out.println("Access Token: ");
         System.out.println(input.getToken());
-        var token = input.getToken().substring(TOKEN_BEARER_PREFIX.length());
-        if (!introspectAccessToken(token)) {
+        if (!introspectAccessToken(input.getToken())) {
             return invalidResult;
         }
         return validResult();
@@ -40,7 +39,10 @@ public class HelloFunction {
     }
 
     private static boolean introspectAccessToken(String accessToken) throws IOException, InterruptedException {
+        System.out.println("Entering the HelloFunction#introspectAccessToken");
         var credential = System.getenv("client_id") + ":" + System.getenv("Client_secret");
+        System.out.println("Show the base64 encoded client credential.");
+        System.out.println(credential);
         var httpRequest = HttpRequest
                 .newBuilder(URI.create(System.getenv("idcs_base_url") + "/oauth2/v1/introspect"))
                 .headers(
