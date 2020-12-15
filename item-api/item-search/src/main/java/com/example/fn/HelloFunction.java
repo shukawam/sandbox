@@ -6,48 +6,47 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
 public class HelloFunction {
 
+    // Oracle Functions Contexts
     private static final String ORDS_BASE_URL = "ords_base_url";
+    private static final String CLIENT_ID = "client_id";
+    private static final String CLIENT_SECRET = "client_secret";
 
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
     public List<Item> handleRequest() {
-        final var ordsBaseUrl = System.getenv(ORDS_BASE_URL);
-        var httpRequest = HttpRequest.newBuilder(URI.create(ordsBaseUrl + "/api/v1/items"))
-                .header("Authorization", getAuthToken())
+        var ordsBaseUrl = System.getenv(ORDS_BASE_URL);
+        var httpRequest = HttpRequest
+                .newBuilder(URI.create(ordsBaseUrl + "/api/v1/items"))
+                .header("Authorization", getAuthToken(ordsBaseUrl))
                 .GET()
                 .build();
-        UncheckedObjectMapper objectMapper = new UncheckedObjectMapper();
         try {
             var httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             System.out.println(httpResponse.body());
-            return new Gson().fromJson(httpResponse.body(), new TypeToken<List<Item>>(){}.getType());
+            return new Gson().fromJson(httpResponse.body(), new TypeToken<OrdsResponse>(){}.getType());
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             throw new RuntimeException();
         }
     }
 
-    private String getAuthToken() {
+    private String getAuthToken(String ordsBaseUrl) {
         String authToken = "";
         try {
-            var ordsBaseUrl = System.getenv("ords_base_url");
-            var clientId = System.getenv("client_id");
-            var clientSecret = System.getenv("client_secret");
+            var clientId = System.getenv(CLIENT_ID);
+            var clientSecret = System.getenv(CLIENT_SECRET);
             System.out.println("ordsBaseUrl:" + ordsBaseUrl);
             System.out.println("clientId:" + clientId);
             System.out.println("clientSecret:" + clientSecret);
-
             var authString = clientId + ":" + clientSecret;
             var authEncoded = "Basic " + Base64.getEncoder().encodeToString(authString.getBytes());
             System.out.println("oauth url:" + ordsBaseUrl + "/oauth/token");
@@ -71,18 +70,4 @@ public class HelloFunction {
         return authToken;
     }
 
-}
-
-class UncheckedObjectMapper extends com.fasterxml.jackson.databind.ObjectMapper {
-    /**
-     * Parses the given JSON string into a Map.
-     */
-    Map<String, String> readValue(String content) {
-        try {
-            return this.readValue(content, new TypeReference<>() {
-            });
-        } catch (IOException ioe) {
-            throw new CompletionException(ioe);
-        }
-    }
 }
