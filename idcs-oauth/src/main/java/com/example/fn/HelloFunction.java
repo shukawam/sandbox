@@ -1,28 +1,62 @@
 package com.example.fn;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.Map;
 
 public class HelloFunction {
 
     private static final String TYPE = "TOKEN";
 
-    private static final String CREDENTIALS = "YWU3NzdhZWNjNWJiNGQ4M2E1MTE5OTBjNDY1MjM4YjM6NWY3N2FiOTEtMjRlOS00YTU1LTkzZTItOGEyZTQ5OGY5MGMx";
+    private static final String TOKEN_BEARER_PREFIX = "Bearer ";
 
-    public Result handleRequest(Input input) {
+    private static HttpClient httpClient = HttpClient.newHttpClient();
+
+    public Result handleRequest(Input input) throws IOException, InterruptedException {
         System.out.println("Entering the Authorizer Functions!");
         var invalidResult = invalidResult();
-        invalidResult.setWwwAuthenticate(input.getToken());
         if (!checkInput(input)) {
             return invalidResult;
         }
-        System.out.println("*** Token ***");
+        System.out.println("Access Token: ");
         System.out.println(input.getToken());
-        return invalidResult;
+        var token = input.getToken().substring(TOKEN_BEARER_PREFIX.length());
+        if (!introspectAccessToken(token)) {
+            return invalidResult;
+        }
+        return validResult();
     }
 
     private static boolean checkInput(Input input) {
         return input == null || "".equals(input.getType()) || !TYPE.equals(input.getType()) || input.getToken() == null || "".equals(input.getToken()) ? false : true;
     }
+
+    private static boolean introspectAccessToken(String accessToken) throws IOException, InterruptedException {
+        var credential = System.getenv("client_id") + ":" + System.getenv("Client_secret");
+        var httpRequest = HttpRequest
+                .newBuilder(URI.create(System.getenv("idcs_base_url") + "/oauth2/v1/introspect"))
+                .headers(
+                        "Content-Type", "application/x-www-form-urlencoded",
+                        "Authorization", "Basic " + Base64.getEncoder().encodeToString(credential.getBytes())
+                )
+                .POST(HttpRequest.BodyPublishers.ofString("token=" + accessToken))
+                .build();
+        var httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<HashMap<String, Object>> typeRef = new TypeReference<HashMap<String, Object>>() {
+        };
+        HashMap<String, Object> validateResult = mapper.readValue(httpResponse.body(), typeRef);
+        return (boolean) validateResult.get("active");
+    }
+
 
     private static Result validResult() {
         var validResult = new Result();
