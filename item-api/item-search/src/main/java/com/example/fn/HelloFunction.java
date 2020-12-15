@@ -22,7 +22,7 @@ public class HelloFunction {
 
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
-    public List<Item> handleRequest() {
+    public OrdsResponse handleRequest() {
         var ordsBaseUrl = System.getenv(ORDS_BASE_URL);
         var httpRequest = HttpRequest
                 .newBuilder(URI.create(ordsBaseUrl + "/api/v1/items"))
