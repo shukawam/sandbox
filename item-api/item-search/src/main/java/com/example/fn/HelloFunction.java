@@ -22,7 +22,7 @@ public class HelloFunction {
 
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
-    public OrdsResponse handleRequest() {
+    public List<Item> handleRequest() {
         var ordsBaseUrl = System.getenv(ORDS_BASE_URL);
         var httpRequest = HttpRequest
                 .newBuilder(URI.create(ordsBaseUrl + "/api/v1/items"))
@@ -32,7 +32,9 @@ public class HelloFunction {
         try {
             var httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             System.out.println(httpResponse.body());
-            return new Gson().fromJson(httpResponse.body(), new TypeToken<OrdsResponse>(){}.getType());
+            OrdsResponse ordsResponse = new Gson().fromJson(httpResponse.body(), new TypeToken<OrdsResponse>() {
+            }.getType());
+            return ordsResponse.getItems();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             throw new RuntimeException();
