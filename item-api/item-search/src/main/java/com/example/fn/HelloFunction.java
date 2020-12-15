@@ -21,7 +21,7 @@ public class HelloFunction {
 
     public CompletableFuture<Map<String, String>> handleRequest() {
         final var ordsBaseUrl = System.getenv(ORDS_BASE_URL);
-        var httpRequest = HttpRequest.newBuilder(URI.create(ordsBaseUrl))
+        var httpRequest = HttpRequest.newBuilder(URI.create(ordsBaseUrl + "/api/v1/items"))
                 .header("Authorization", getAuthToken())
                 .GET()
                 .build();
