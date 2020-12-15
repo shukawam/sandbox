@@ -1,0 +1,21 @@
+@ordsBaseUrl = https://sya6vphk3pzlkhq-sandbox.adb.ap-tokyo-1.oraclecloudapps.com/ords/shukawam
+
+@clientId = Y0Fphjzg3bLgJ0EVwhLAYw..
+
+@clientSecret = iANFaULcurStdXLySLpCnA..
+
+@credential = WTBGcGhqemczYkxnSjBFVndoTEFZdy4uOmlBTkZhVUxjdXJTdGRYTHlTTHBDbkEuLg==
+
+### Get Access Token
+# @name getAccessToken
+POST {{ordsBaseUrl}}/oauth/token HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic {{credential}}
+
+grant_type=client_credentials
+
+### Get All Items
+# @name getAllItems
+GET {{ordsBaseUrl}}/api/v1/items HTTP/1.1
+Content-Type: application/json
+Authorization: {{getAccessToken.response.body.$.access_token}}
