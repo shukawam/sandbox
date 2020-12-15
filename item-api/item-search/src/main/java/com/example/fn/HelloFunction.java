@@ -30,6 +30,7 @@ public class HelloFunction {
         UncheckedObjectMapper objectMapper = new UncheckedObjectMapper();
         try {
             var httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            System.out.println(httpResponse.body());
             return new Gson().fromJson(httpResponse.body(), new TypeToken<List<Item>>(){}.getType());
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
