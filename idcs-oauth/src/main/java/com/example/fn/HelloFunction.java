@@ -16,8 +16,6 @@ public class HelloFunction {
 
     private static final String TYPE = "TOKEN";
 
-    private static final String TOKEN_BEARER_PREFIX = "Bearer ";
-
     private static HttpClient httpClient = HttpClient.newHttpClient();
 
     public Result handleRequest(Input input) throws IOException, InterruptedException {
@@ -40,7 +38,7 @@ public class HelloFunction {
 
     private static boolean introspectAccessToken(String accessToken) throws IOException, InterruptedException {
         System.out.println("Entering the HelloFunction#introspectAccessToken");
-        var credential = System.getenv("client_id") + ":" + System.getenv("Client_secret");
+        var credential = System.getenv("client_id") + ":" + System.getenv("client_secret");
         System.out.println("Show the base64 encoded client credential.");
         System.out.println(credential);
         var httpRequest = HttpRequest
