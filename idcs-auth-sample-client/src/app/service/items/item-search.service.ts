@@ -32,10 +32,14 @@ export class ItemSearchService {
     ).toPromise();
   }
 
-  async getAllItems(): Promise<Item[]> {
+  async getAllItems(accessToken: string): Promise<Item[]> {
+    const headers = new HttpHeaders({
+      'Authorization': accessToken
+    })
     return await this.httpClient.get<Item[]>(
       `${environment.item_base}`,
       {
+        headers: headers,
         responseType: 'json'
       }
     ).toPromise();

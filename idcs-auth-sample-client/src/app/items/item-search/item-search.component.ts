@@ -37,7 +37,7 @@ export class ItemSearchComponent implements OnInit {
   }
 
   async itemSearch(): Promise<void> {
-    await this.itemSearchService.getAllItems().then(data => {
+    await this.itemSearchService.getAllItems(this.accessToken).then(data => {
       console.log('Show Response Body.');
       console.log(data);
       this.items = data;
