@@ -1,3 +1,17 @@
 @apiEndPoint = http://localhost:30000
 
-GET {{apiEndPoint}}/hello HTTP/1.1
+@apiGwEndPoint = https://e43wdnpeekctbzhoxrjcg45mqe.apigateway.ca-toronto-1.oci.customer-oci.com/transform
+
+### Request to localhost express server
+GET {{apiEndPoint}}/hello?name=kawamura HTTP/1.1
+client-adding-header: value1
+client-skipping-header: value2
+before-header: value3
+blocked-header: value4
+
+### Request to API Gateway
+GET {{apiGwEndPoint}}/hello HTTP/1.1
+client-adding-header: value1
+client-skipping-header: value2
+before-header: value3
+blocked-header: value4
