@@ -1,6 +1,6 @@
 @apiEndPoint = http://localhost:30000
 
-@apiGwEndPoint = https://e43wdnpeekctbzhoxrjcg45mqe.apigateway.ca-toronto-1.oci.customer-oci.com/transform
+@apiGwEndPoint = https://fgw5zmlsdxpqyppd4mwure4zdy.apigateway.ap-tokyo-1.oci.customer-oci.com/transform
 
 ### Request to localhost express server
 GET {{apiEndPoint}}/hello?name=kawamura HTTP/1.1
@@ -8,6 +8,7 @@ client-adding-header: value1
 client-skipping-header: value2
 before-header: value3
 blocked-header: value4
+required-header: ok
 
 ### Request to API Gateway
 GET {{apiGwEndPoint}}/hello HTTP/1.1
@@ -15,3 +16,6 @@ client-adding-header: value1
 client-skipping-header: value2
 before-header: value3
 blocked-header: value4
+
+### Requires a spesific header(required-header)
+GET {{apiEndPoint}}/require-header HTTP/1.1
