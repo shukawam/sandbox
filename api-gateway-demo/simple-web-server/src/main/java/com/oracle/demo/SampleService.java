@@ -16,7 +16,8 @@ public class SampleService implements Service {
     public void update(Routing.Rules rules) {
         rules
                 .get("/header-query-logging/{+}", this::loggingRequestHeaderAndQueryParams)
-                .get("/require-header", this::checkIncludedSpecificRequestHeader);
+                .get("/require-header", this::checkIncludedSpecificRequestHeader)
+                .get("/delete-header", this::simpleResponse);
     }
 
     private void loggingRequestHeaderAndQueryParams(ServerRequest req, ServerResponse res) {
@@ -40,5 +41,9 @@ public class SampleService implements Service {
             res.send("Missing required-header in HTTP Request Headers.");
         }
         res.send("Include specific HTTP Request Header!");
+    }
+
+    private void simpleResponse(ServerRequest req, ServerResponse res) {
+        res.send("Hello");
     }
 }
