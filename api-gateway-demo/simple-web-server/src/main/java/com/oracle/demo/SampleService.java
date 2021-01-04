@@ -27,9 +27,6 @@ public class SampleService implements Service {
             LOGGER.info(String.format("%s: %s", entry.getKey(), entry.getValue()));
         });
         LOGGER.info(String.format("%s: Request Params", now));
-        req.queryParams().toMap().entrySet().forEach(entry -> {
-            LOGGER.info(String.format("%s: %s", entry.getKey(), entry.getValue()));
-        });
         req.path().segments().forEach(LOGGER::info);
         res.send(String.format("Hello %s!", req.path().segments().get(1)));
     }
