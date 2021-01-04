@@ -54,12 +54,12 @@ public class MainTest {
 
     @Test
     public void testHelloWorld() throws Exception {
-        webClient.get()
-                .path("/greet")
-                .request(JsonObject.class)
-                .thenAccept(jsonObject -> Assertions.assertEquals("Hello World!", jsonObject.getString("message")))
-                .toCompletableFuture()
-                .get();
+        // webClient.get()
+        //         .path("/greet")
+        //         .request(JsonObject.class)
+        //         .thenAccept(jsonObject -> Assertions.assertEquals("Hello World!", jsonObject.getString("message")))
+        //         .toCompletableFuture()
+        //         .get();
 
         webClient.get()
                 .path("/health")
