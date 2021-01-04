@@ -17,7 +17,7 @@ public class SampleService implements Service {
         rules
                 .get("/header-query-logging/{+}", this::loggingRequestHeaderAndQueryParams)
                 .get("/require-header", this::checkIncludedSpecificRequestHeader)
-                .get("/delete-header", this::simpleResponse);
+                .get("/delete-server-header", this::simpleResponse);
     }
 
     private void loggingRequestHeaderAndQueryParams(ServerRequest req, ServerResponse res) {
