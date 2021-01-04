@@ -1,13 +1,13 @@
 version: '3.3'
 
 services:
-  api:
+  web:
     build: 
-      context: ./simple-api-express
+      context: ./simple-web-server
       dockerfile: Dockerfile
     ports:
-      - 30000:30000
-  web:
+      - 8080:8080
+  proxy:
     build:
       context: ./nginx
       dockerfile: Dockerfile
