@@ -5,5 +5,8 @@
 # maven
 target/
 
+# Helidon
+.helidon
+
 # node_modules
 node_modules/
