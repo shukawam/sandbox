@@ -7,16 +7,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const server = app.listen(30000);
 
 // Simply shows HTTP Request Headers and Query Parameters.
-app.get('/header-query-logging', (req, res) => {
+app.get('/header-query-logging/:name', (req, res) => {
     const now = Date.now();
     console.log(`${now}: Request Headers`);
     console.log(req.headers);
     if ('required-header' in req.headers) {
         console.log('ok');
     }
-    console.log(`${now}: Request Query`);
-    console.log(req.query);
-    res.send(`Hello ${req.query.name}`);
+    console.log(`${now}: Request Path`);
+    console.log(req.params);
+    res.send(`Hello ${req.params.name}`);
 });
 
 // Requires specific HTTP Request Header(required-header).
