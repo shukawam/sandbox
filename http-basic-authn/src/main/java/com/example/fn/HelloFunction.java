@@ -38,7 +38,7 @@ public class HelloFunction {
             result.wwwAuthenticate = "Basic error=\"missing_token\"";
             return result;
         }
-        var correctToken = Base64.getEncoder().encode(String.format("%s:%s", USER, PASSWORD).getBytes());
+        var correctToken = Base64.getEncoder().encodeToString(String.format("%s:%s", USER, PASSWORD).getBytes());
         if (!correctToken.equals(input.token.substring(TOKEN_PREFIX.length()))) {
             result.active = false;
             result.expiresAt = "2021-01-10T10:15:30+01:00";
