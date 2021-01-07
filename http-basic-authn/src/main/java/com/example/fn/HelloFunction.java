@@ -46,7 +46,7 @@ public class HelloFunction {
             return result;
         }
         result.active = true;
-        result.expiresAt = "2000-01-10T10:15:30+01:00\"";
+        result.expiresAt = "2021-01-10T10:15:30+01:00\"";
         result.principal = USER;
         result.scope = new String[]{"list:hello", "create:hello"};
         return result;
