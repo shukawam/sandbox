@@ -38,6 +38,7 @@ public class HelloFunction {
             result.wwwAuthenticate = "Basic error=\"missing_token\"";
             return result;
         }
+        // write down your own check logic here.
         var correctToken = Base64.getEncoder().encodeToString(String.format("%s:%s", USER, PASSWORD).getBytes());
         if (!correctToken.equals(input.token.substring(TOKEN_PREFIX.length()))) {
             result.active = false;
@@ -48,7 +49,7 @@ public class HelloFunction {
         result.active = true;
         result.expiresAt = "2021-01-10T10:15:30+01:00\"";
         result.principal = USER;
-        result.scope = new String[]{"list:hello", "create:hello"};
+        result.scope = new String[]{"list:hello", "create:hello", "update:hello", "delete:hello"};
         return result;
     }
 
