@@ -1,6 +1,6 @@
 @localEndPoint = http://localhost
 
-@apiGwEndPoint = https://fgw5zmlsdxpqyppd4mwure4zdy.apigateway.ap-tokyo-1.oci.customer-oci.com/transform
+@apiGwEndPoint = https://hoyd25e47jjc7ku2ekiqgeryki.apigateway.ap-tokyo-1.oci.customer-oci.com/transform
 
 ##### Demo1 & Demo3 #####
 ### Add HTTP Request Headers and Rewrite URL(To APIGW)
