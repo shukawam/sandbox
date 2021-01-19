@@ -1,8 +1,8 @@
-@localEndPoint = http://localhost
+@localEndPoint = http://localhost:8080
 
 @apiGwEndPoint = https://hoyd25e47jjc7ku2ekiqgeryki.apigateway.ap-tokyo-1.oci.customer-oci.com/transform
 
-##### Demo1 & Demo3 #####
+##### Demo1 #####
 ### Add HTTP Request Headers and Rewrite URL(To APIGW)
 GET {{apiGwEndPoint}}/header-query-logging?name=kawamura HTTP/1.1
 
@@ -23,3 +23,6 @@ GET {{apiGwEndPoint}}/delete-server-header HTTP/1.1
 
 ### 
 GET {{localEndPoint}}/v1/delete-server-header HTTP/1.1
+
+##### Health Check #####
+GET {{apiGwEndPoint}}/health HTTP/1.1
