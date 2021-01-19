@@ -7,9 +7,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8080:8080
-  proxy:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    ports: 
-      - 80:80
+  # proxy:
+  #   build:
+  #     context: ./nginx
+  #     dockerfile: Dockerfile
+  #   ports: 
+  #     - 80:80
