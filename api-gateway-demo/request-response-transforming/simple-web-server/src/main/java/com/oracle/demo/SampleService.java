@@ -41,6 +41,7 @@ public class SampleService implements Service {
     }
 
     private void simpleResponse(ServerRequest req, ServerResponse res) {
+        res.headers().add("Private", "test");
         res.send("Hello");
     }
 }
