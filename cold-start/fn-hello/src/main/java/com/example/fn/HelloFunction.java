@@ -5,12 +5,13 @@ import com.fnproject.fn.api.httpgateway.HTTPGatewayContext;
 import java.util.logging.Logger;
 
 public class HelloFunction {
-
+    private static final String HEALTH_CHECK_URL = "/cold/health";
     private static final Logger LOGGER = Logger.getLogger(HelloFunction.class.getName());
 
     public Object handleRequest(HTTPGatewayContext httpGatewayContext) {
-        LOGGER.info(String.format("RequestURL: %s", httpGatewayContext.getRequestURL()));
-        return "ok";
+        return HEALTH_CHECK_URL.equals(httpGatewayContext.getRequestURL())
+                ? healthCheck()
+                : hello();
     }
 
     private String hello() {
