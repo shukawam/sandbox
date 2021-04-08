@@ -1,12 +1,25 @@
 package com.example.fn;
 
+import com.fnproject.fn.api.httpgateway.HTTPGatewayContext;
+
+import java.util.logging.Logger;
+
 public class HelloFunction {
 
-    public String handleRequest(String input) {
-        String name = (input == null || input.isEmpty()) ? "world" : input;
+    private static final Logger LOGGER = Logger.getLogger(HelloFunction.class.getName());
 
-        System.out.println("Inside Java Hello World function");
-        return "Hello, " + name + "!";
+    public Object handleRequest(HTTPGatewayContext httpGatewayContext) {
+        LOGGER.info(String.format("RequestURL: %s", httpGatewayContext.getRequestURL()));
+        return "ok";
+    }
+
+    private String hello() {
+        return "Hello, world!!";
+    }
+
+    private HealthCheckResult healthCheck() {
+        // always return "UP"
+        return new HealthCheckResult(HealthStatus.UP);
     }
 
 }
