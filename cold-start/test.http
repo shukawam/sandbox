@@ -1,0 +1,7 @@
+@endpoint = https://pdjk3ikdxkuktzcrvalmyu2ftq.apigateway.ap-tokyo-1.oci.customer-oci.com/cold
+
+### should return "Hello, world"
+GET {{endpoint}}/hello HTTP/1.1
+
+### shoud return "{"status": "UP"}"
+GET {{endpoint}}/health HTTP/1.1
