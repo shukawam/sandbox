@@ -2,11 +2,23 @@ package com.example.fn;
 
 import com.fnproject.fn.api.httpgateway.HTTPGatewayContext;
 
-import java.util.logging.Logger;
-
 public class HelloFunction {
     private static final String HEALTH_CHECK_URL = "/cold/health";
-    private static final Logger LOGGER = Logger.getLogger(HelloFunction.class.getName());
+
+    public static class HealthCheckResult {
+        public HealthStatus status;
+        public HealthCheckResult() {
+            // default constructor.
+        }
+
+        public HealthCheckResult(HealthStatus status) {
+            this.status = status;
+        }
+    }
+
+    public enum HealthStatus {
+        UP, DOWN
+    }
 
     public Object handleRequest(HTTPGatewayContext httpGatewayContext) {
         return HEALTH_CHECK_URL.equals(httpGatewayContext.getRequestURL())
