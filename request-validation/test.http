@@ -1,0 +1,28 @@
+@endpoint = https://pdjk3ikdxkuktzcrvalmyu2ftq.apigateway.ap-tokyo-1.oci.customer-oci.com/openapi2
+
+### Header validation: ok
+GET {{endpoint}}/pet HTTP/1.1
+Validation: required
+Content-Type: application/json
+
+### Header validation: ng
+GET {{endpoint}}/pet HTTP/1.1
+
+### Body validation: ok
+POST {{endpoint}}/pet HTTP/1.1
+Validation: required
+Content-Type: application/json
+
+{
+    "id": 3,
+    "name": "tora"
+}
+
+### Body Validation: ng
+POST {{endpoint}}/pet HTTP/1.1
+Validation: required
+
+{
+    "id": 3,
+    "name": "tora"
+}

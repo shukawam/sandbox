@@ -1,0 +1,52 @@
+openapi: '3.0.2'
+info:
+  title: Validation Sample
+  version: '1.0'
+servers:
+  - url: https://pdjk3ikdxkuktzcrvalmyu2ftq.apigateway.ap-tokyo-1.oci.customer-oci.com
+paths:
+  /pet:
+    get:
+      responses:
+        '200':
+          description: Return all pets in database.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+              examples:
+                Cat:
+                  value:
+                    id: 1
+                    name: tama
+                Dog:
+                  value:
+                    id: 2
+                    name: pochi
+  /pet/{id}:
+    get:
+      responses:
+        '200':
+          description: Return pets by ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+              examples:
+                Cat:
+                  value:
+                    id: 1
+                    name: pochi
+
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: cat
