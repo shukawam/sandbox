@@ -1,9 +1,9 @@
 openapi: '3.0.2'
 info:
-  title: Employee API
+  title: OpenAPI example
   version: '1.0'
 servers:
-  - url: https://hoyd25e47jjc7ku2ekiqgeryki.apigateway.ap-tokyo-1.oci.customer-oci.com
+  - url: https://pdjk3ikdxkuktzcrvalmyu2ftq.apigateway.ap-tokyo-1.oci.customer-oci.com
 paths:
   /employee:
     get:
@@ -25,13 +25,20 @@ paths:
       responses:
         '201':
           description: return employee information that created.
-  /employee/{employeeId}:
+          content:
+            application/json:
+              examples:
+                example01:
+                  value: 
+                    id: 3
+                    name: John
+  /employee/id/{id}:
     get:
       responses:
         '200':
           description: return employee infomation that matched an employeeId.
       parameters:
-        - name: employeeId
+        - name: id
           in: path
           schema:
             type: integer
@@ -41,7 +48,7 @@ paths:
         '204':
           description: return employee information that updated.
       parameters:
-        - name: employeeId
+        - name: id
           in: path
           schema:
             type: integer
