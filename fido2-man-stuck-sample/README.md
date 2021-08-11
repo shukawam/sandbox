@@ -1,8 +1,6 @@
 # About
 
-フルスクラッチで作成した FIDO2(Relying Party, Client)のサンプル実装です．
+Sample implementation for FIDO2
 
-# 概要説明
-
-- webauthn-angular-sample: JavaScript Application
-- webauthn-nestjs-sample: Relying Party
+- webauthn-angular-sample: JavaScript WebAuthn Client Application
+- webauthn-nestjs-sample: WebAuthn - Relying Party
