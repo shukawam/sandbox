@@ -1,0 +1,14 @@
+version: '3.8'
+
+volumes:
+  redis-data:
+
+services:
+  redis:
+    image: redis:6.2.6
+    container_name: redis
+    ports:
+      - 6379:6379
+    command: redis-server --requirepass <your-password>
+    volumes:
+      - redis-data:/data
