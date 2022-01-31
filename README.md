@@ -1,3 +1,3 @@
 # sandbox
 
-雑多な検証用
+for my sandbox projects.
