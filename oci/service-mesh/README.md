@@ -1,5 +1,7 @@
 # readme
 
+ref: [https://gist.github.com/shukawam/f04bb06c93a72ac5276e7b39597ebecd](https://gist.github.com/shukawam/f04bb06c93a72ac5276e7b39597ebecd)
+
 namespace 作成
 
 ```bash
