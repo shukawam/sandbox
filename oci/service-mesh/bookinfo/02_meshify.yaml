@@ -1,0 +1,380 @@
+---
+kind: Mesh
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: bookinfo
+  namespace: oci-sm
+spec:
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  certificateAuthorities:
+    - id: ocid1.certificateauthority.oc1.phx.amaaaaaassl65iqa36wfx2wvwjuvsy23acpx3o6qzqm5vkrbg4haqw5bjucq
+  mtls:
+    minimum: PERMISSIVE
+---
+##################################################################################################
+# Details service
+##################################################################################################
+kind: VirtualService
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: details
+  namespace: oci-sm
+spec:
+  mesh:
+    ref:
+      name: bookinfo
+  defaultRoutingPolicy:
+    type: UNIFORM
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  hosts:
+    - details
+    - details:9080
+---
+kind: VirtualDeployment
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: details-v1
+  namespace: oci-sm
+spec:
+  virtualService:
+    ref:
+      name: details
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  listener:
+    - port: 9080
+      protocol: HTTP
+  accessLogging:
+    isEnabled: true
+  serviceDiscovery:
+    type: DNS
+    hostname: details
+---
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+kind: VirtualServiceRouteTable
+metadata:
+  name: details-route-table
+  namespace: oci-sm
+spec:
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  virtualService:
+    ref:
+      name: details
+  routeRules:
+    - httpRoute:
+        destinations:
+          - virtualDeployment:
+              ref:
+                name: details-v1
+            weight: 100
+---
+##################################################################################################
+# Ratings service
+##################################################################################################
+kind: VirtualService
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: ratings
+  namespace: oci-sm
+spec:
+  mesh:
+    ref:
+      name: bookinfo
+  defaultRoutingPolicy:
+    type: UNIFORM
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  hosts:
+    - ratings
+    - ratings:9080
+---
+kind: VirtualDeployment
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: ratings-v1
+  namespace: oci-sm
+spec:
+  virtualService:
+    ref:
+      name: ratings
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  listener:
+    - port: 9080
+      protocol: HTTP
+  accessLogging:
+    isEnabled: true
+  serviceDiscovery:
+    type: DNS
+    hostname: ratings
+---
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+kind: VirtualServiceRouteTable
+metadata:
+  name: ratings-route-table
+  namespace: oci-sm
+spec:
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  virtualService:
+    ref:
+      name: ratings
+  routeRules:
+    - httpRoute:
+        destinations:
+          - virtualDeployment:
+              ref:
+                name: ratings-v1
+            weight: 100
+---
+##################################################################################################
+# Reviews service
+##################################################################################################
+kind: VirtualService
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: reviews
+  namespace: oci-sm
+spec:
+  mesh:
+    ref:
+      name: bookinfo
+  defaultRoutingPolicy:
+    type: UNIFORM
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  hosts:
+    - reviews
+    - reviews:9080
+---
+kind: VirtualDeployment
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: reviews-v1
+  namespace: oci-sm
+spec:
+  virtualService:
+    ref:
+      name: reviews
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  listener:
+    - port: 9080
+      protocol: HTTP
+  accessLogging:
+    isEnabled: true
+  serviceDiscovery:
+    type: DNS
+    hostname: reviews
+---
+kind: VirtualDeployment
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: reviews-v2
+  namespace: oci-sm
+spec:
+  virtualService:
+    ref:
+      name: reviews
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  listener:
+    - port: 9080
+      protocol: HTTP
+  accessLogging:
+    isEnabled: true
+  serviceDiscovery:
+    type: DNS
+    hostname: reviews
+---
+kind: VirtualDeployment
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: reviews-v3
+  namespace: oci-sm
+spec:
+  virtualService:
+    ref:
+      name: reviews
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  listener:
+    - port: 9080
+      protocol: HTTP
+  accessLogging:
+    isEnabled: true
+  serviceDiscovery:
+    type: DNS
+    hostname: reviews
+---
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+kind: VirtualServiceRouteTable
+metadata:
+  name: reviews-route-table
+  namespace: oci-sm
+spec:
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  virtualService:
+    ref:
+      name: reviews
+  routeRules:
+    - httpRoute:
+        destinations:
+          - virtualDeployment:
+              ref:
+                name: reviews-v1
+            weight: 50
+          - virtualDeployment:
+              ref:
+                name: reviews-v2
+            weight: 25
+          - virtualDeployment:
+              ref:
+                name: reviews-v2
+            weight: 25
+---
+##################################################################################################
+# Productpage services
+##################################################################################################
+kind: VirtualService
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: productpage
+  namespace: oci-sm
+spec:
+  mesh:
+    ref:
+      name: bookinfo
+  defaultRoutingPolicy:
+    type: UNIFORM
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  hosts:
+    - productpage
+    - productpage:9080
+---
+kind: VirtualDeployment
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: productpage
+  namespace: oci-sm
+spec:
+  virtualService:
+    ref:
+      name: productpage
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  listener:
+    - port: 9080
+      protocol: HTTP
+  accessLogging:
+    isEnabled: true
+  serviceDiscovery:
+    type: DNS
+    hostname: productpage
+---
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+kind: VirtualServiceRouteTable
+metadata:
+  name: productpage-route-table
+  namespace: oci-sm
+spec:
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  virtualService:
+    ref:
+      name: productpage
+  routeRules:
+    - httpRoute:
+        destinations:
+          - virtualDeployment:
+              ref:
+                name: productpage
+            weight: 100
+---
+kind: IngressGateway
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: bookinfo-ingress-gateway
+  namespace: oci-sm
+spec:
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  mesh:
+    ref:
+      name: bookinfo
+  hosts:
+    - name: ochacafeHost
+      hostnames:
+        - "sm.ochacafe-s5.cf"
+        - "sm.ochacafe-s5.cf:80"
+        - "sm.ochacafe-s5.cf:443"
+        - "129.153.210.56"
+      listeners:
+        - port: 9080
+          protocol: HTTP
+          tls:
+            serverCertificate:
+              ociTlsCertificate:
+                certificateId: ocid1.certificate.oc1.phx.amaaaaaassl65iqaxcxstx6tywvftmozdnnuyns56as5hpmewrwjwe6gcyhq
+            mode: TLS
+          # tls:
+          #   mode: DISABLED
+  accessLogging:
+    isEnabled: true
+---
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+kind: IngressGatewayRouteTable
+metadata:
+  name: bookinfo-ingress-gateway-route-table
+  namespace: oci-sm
+spec:
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  ingressGateway:
+    ref:
+      name: bookinfo-ingress-gateway
+  routeRules:
+    - httpRoute:
+        ingressGatewayHost:
+          name: ochacafeHost
+        destinations:
+          - virtualService:
+              ref:
+                name: productpage
+---
+kind: AccessPolicy
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: bookinfo-ingress-policy
+  namespace: oci-sm
+spec:
+  mesh:
+    ref:
+      name: bookinfo
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  rules:
+    - action: ALLOW
+      source:
+        virtualService:
+          ref:
+            name: productpage
+      destination:
+        virtualService:
+          ref:
+            name: details
+    - action: ALLOW
+      source:
+        virtualService:
+          ref:
+            name: productpage
+      destination:
+        virtualService:
+          ref:
+            name: reviews
+    - action: ALLOW
+      source:
+        virtualService:
+          ref:
+            name: reviews
+      destination:
+        virtualService:
+          ref:
+            name: ratings
+    - action: ALLOW
+      source:
+        ingressGateway:
+          ref:
+            name: bookinfo-ingress-gateway
+      destination:
+        virtualService:
+          ref:
+            name: productpage
+---

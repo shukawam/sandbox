@@ -1,0 +1,125 @@
+kind: VirtualDeploymentBinding
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: details-binding
+  namespace: oci-sm
+spec:
+  virtualDeployment:
+    ref:
+      name: details-v1
+      namespace: oci-sm
+  target:
+    service:
+      ref:
+        name: details
+        namespace: oci-sm
+---
+kind: VirtualDeploymentBinding
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: ratings-v1-binding
+  namespace: oci-sm
+spec:
+  virtualDeployment:
+    ref:
+      name: ratings-v1
+      namespace: oci-sm
+  target:
+    service:
+      ref:
+        name: ratings
+        namespace: oci-sm
+      matchLabels:
+        version: v1
+---
+kind: VirtualDeploymentBinding
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: reviews-v1-binding
+  namespace: oci-sm
+spec:
+  virtualDeployment:
+    ref:
+      name: reviews-v1
+      namespace: oci-sm
+  target:
+    service:
+      ref:
+        name: reviews
+        namespace: oci-sm
+      matchLabels:
+        version: v1
+---
+kind: VirtualDeploymentBinding
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: reviews-v2-binding
+  namespace: oci-sm
+spec:
+  virtualDeployment:
+    ref:
+      name: reviews-v2
+      namespace: oci-sm
+  target:
+    service:
+      ref:
+        name: reviews
+        namespace: oci-sm
+      matchLabels:
+        version: v2
+---
+kind: VirtualDeploymentBinding
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: reviews-v3-binding
+  namespace: oci-sm
+spec:
+  virtualDeployment:
+    ref:
+      name: reviews-v3
+      namespace: oci-sm
+  target:
+    service:
+      ref:
+        name: reviews
+        namespace: oci-sm
+      matchLabels:
+        version: v3
+---
+kind: VirtualDeploymentBinding
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+metadata:
+  name: productpage-binding
+  namespace: oci-sm
+spec:
+  virtualDeployment:
+    ref:
+      name: productpage
+      namespace: oci-sm
+  target:
+    service:
+      ref:
+        name: productpage
+        namespace: oci-sm
+---
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+kind: IngressGatewayDeployment
+metadata:
+  name: bookinfo-ingress-gateway-deployment
+  namespace: oci-sm
+spec:
+  ingressGateway:
+    ref:
+      name: bookinfo-ingress-gateway
+      namespace: oci-sm
+  deployment:
+    autoscaling:
+      minPods: 1
+      maxPods: 1
+  ports:
+    - protocol: TCP
+      port: 9080
+      serviceport: 443
+  service:
+    type: ClusterIP
+---

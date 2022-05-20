@@ -1,0 +1,33 @@
+apiVersion: servicemesh.oci.oracle.com/v1beta1
+kind: AccessPolicy
+metadata:
+  name: bookinfo-egress-policy
+  namespace: oci-sm
+spec:
+  compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  name: bookinfo-egress-policy
+  description: This Access Policy
+  mesh:
+    ref:
+      name: bookinfo
+  rules:
+    - action: ALLOW
+      source:
+        virtualService:
+          ref:
+            name: productpage
+      destination:
+        externalService:
+          httpExternalService:
+            hostnames: ["sm.ochacafe-s5.cf"]
+            ports: [80]
+    - action: ALLOW
+      source:
+        virtualService:
+          ref:
+            name: productpage
+      destination:
+        externalService:
+          httpsExternalService:
+            hostnames: ["sm.ochacafe-s5.cf"]
+            ports: [443]
