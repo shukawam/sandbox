@@ -294,10 +294,9 @@ spec:
   hosts:
     - name: ochacafeHost
       hostnames:
-        - "sm.ochacafe-s5.cf"
-        - "sm.ochacafe-s5.cf:80"
-        - "sm.ochacafe-s5.cf:443"
-        - "129.153.210.56"
+        - sm.ochacafe-s5.cf
+        - sm.ochacafe-s5.cf:80
+        - sm.ochacafe-s5.cf:443
       listeners:
         - port: 9080
           protocol: HTTP
