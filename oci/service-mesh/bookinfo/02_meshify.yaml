@@ -20,6 +20,8 @@ metadata:
   name: details
   namespace: oci-sm
 spec:
+  mtls:
+    mode: PERMISSIVE
   mesh:
     ref:
       name: bookinfo
@@ -76,6 +78,8 @@ metadata:
   name: ratings
   namespace: oci-sm
 spec:
+  mtls:
+    mode: PERMISSIVE
   mesh:
     ref:
       name: bookinfo
@@ -132,6 +136,8 @@ metadata:
   name: reviews
   namespace: oci-sm
 spec:
+  mtls:
+    mode: PERMISSIVE
   mesh:
     ref:
       name: bookinfo
@@ -234,6 +240,8 @@ metadata:
   name: productpage
   namespace: oci-sm
 spec:
+  mtls:
+    mode: PERMISSIVE
   mesh:
     ref:
       name: bookinfo
