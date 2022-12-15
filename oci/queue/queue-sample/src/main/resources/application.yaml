@@ -1,0 +1,17 @@
+# Microprofile server properties
+server:
+  port: 8080
+  host: 0.0.0.0
+
+# Change the following to true to enable the optional MicroProfile Metrics REST.request metrics
+metrics:
+  rest-request:
+    enabled: true
+
+# OCI Queue Configration.
+oci:
+  compartment-id: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+  queue:
+    id: ocid1.queue.oc1.ap-tokyo-1.amaaaaaassl65iqa5ijsbw52dyhnewsfemighngixdfk32oafeqcdrclw2pq
+    endpoint: https://cell-1.queue.messaging.ap-tokyo-1.oci.oraclecloud.com
+  

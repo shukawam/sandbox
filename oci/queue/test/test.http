@@ -1,0 +1,23 @@
+@local = http://localhost:8080
+
+###
+GET {{local}}/health HTTP/1.1
+
+###
+GET {{local}}/queue/test HTTP/1.1
+
+###
+GET {{local}}/queue/list HTTP/1.1
+Content-Type: application/json
+
+###
+POST {{local}}/queue/produce HTTP/1.1
+Content-Type: application/json
+
+{
+    "message": "Hello world from Helidon!"
+}
+
+###
+GET {{local}}/queue/consume HTTP/1.1
+Content-Type: application/json
