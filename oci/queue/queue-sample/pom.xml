@@ -78,6 +78,10 @@
             <artifactId>oci-java-sdk-shaded-full</artifactId>
             <version>${oci.sdk.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.helidon.microprofile.scheduling</groupId>
+            <artifactId>helidon-microprofile-scheduling</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

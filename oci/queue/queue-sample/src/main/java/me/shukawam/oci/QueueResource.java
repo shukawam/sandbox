@@ -1,7 +1,6 @@
 package me.shukawam.oci;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import com.oracle.bmc.queue.model.GetMessage;
 import com.oracle.bmc.queue.model.QueueSummary;
@@ -19,7 +18,6 @@ import jakarta.ws.rs.core.MediaType;
 @RequestScoped
 public class QueueResource {
     private final QueueService queueService;
-    private static final Logger logger = Logger.getLogger(QueueResource.class.getName());
 
     @Inject
     public QueueResource(QueueService queueService) {
